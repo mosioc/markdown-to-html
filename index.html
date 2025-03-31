@@ -17,6 +17,7 @@
         <div>
             <h2>Markdown</h2>
             <textarea id="markdown-editor" placeholder="Write markdown here ..."></textarea>
+            <div id="word-count">Words: 0</div>
 
             <button id="clear-btn">Clear Editor</button>
             <button id="storage-clear-btn">Delete Storage</button>
@@ -38,6 +39,7 @@
     <script type="module">
         import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
         import { addState, undo, redo } from './utils/historyManager.js';
+        import { updateWordCount } from './utils/wordCounter.js';
 
         // run after DOM loaded 
         document.addEventListener('DOMContentLoaded', () => {
@@ -50,6 +52,8 @@
 
             const undoButton = document.getElementById('undo-btn');
             const redoButton = document.getElementById('redo-btn');
+
+            const wordCountElement = document.getElementById('word-count');
 
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
@@ -112,12 +116,15 @@
             const updateHTMLPreview = () => {
                 const inputMarkdown = markdownEditorInput.value;
 
+                // update word count
+                updateWordCount(inputMarkdown, wordCountElement);
+                
                 // save to localStorage 
                 saveSTG(inputMarkdown);
-
+                
                 // save to history
                 addState(inputMarkdown);
-
+                
 
                 // output html 
                 try {
@@ -132,24 +139,28 @@
                     htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
                 }
             };
-
+            
             // retrieve from localStorage
             const savedInLS = loadSTG();
             if (savedInLS) {
                 markdownEditorInput.value = savedInLS;
-
+                
+                updateWordCount(savedInLS, wordCountElement);
+                
                 addState(savedInLS);
-
+                
                 updateHTMLPreview();
             }
 
             // undo using history 
             undoButton.addEventListener('click', () => {
                 const previousState = undo();
-
+                
                 if (previousState && typeof previousState === 'string') {
                     markdownEditorInput.value = previousState;
 
+                    updateWordCount(previousState, wordCountElement);
+                    
                     htmlPreviewPanel.innerHTML = markdownToHTML(previousState);
                 }
             });
@@ -160,6 +171,9 @@
 
                 if (nextState && typeof nextState === 'string') {
                     markdownEditorInput.value = nextState;
+
+                    updateWordCount(nextState, wordCountElement);
+
                     htmlPreviewPanel.innerHTML = markdownToHTML(nextState);
                 }
             });
