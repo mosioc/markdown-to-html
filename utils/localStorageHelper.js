@@ -1,12 +1,8 @@
-// import CONFIG from "../config.js";
+import { CONFIG } from "../config.js";
 
 // unique key for local storage
-// const locSTG_KEY = CONFIG.STG_KEY || 'defKey';
-const locSTG_KEY = 'defKey';
+const locSTG_KEY = CONFIG.STG_KEY || 'defKey';
 
-// if (locSTG_KEY == 'defKey') {
-//     console.info('Local Storage Key is set to default value!!!');
-// }
 
 export const saveSTG = (outputHTML) => {
     try {
@@ -21,7 +17,7 @@ export const saveSTG = (outputHTML) => {
 export const loadSTG = () => {
     try {
         console.log('loadSTG called.');
-        return localStorage.getItem(locSTG_KEY) || 'defKey';
+        return localStorage.getItem(locSTG_KEY);
     }
     catch (error) {
         console.error('Error loading from localStorage:', error);

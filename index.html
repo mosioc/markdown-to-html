@@ -43,33 +43,6 @@
             const markdownClearButton = document.getElementById('clear-btn');
             const storageClearButton = document.getElementById('storage-clear-btn');
 
-            const updateHTMLPreview = () => {
-                const inputMarkdown = markdownEditorInput.value;
-
-                // save to localStorage 
-                saveSTG(inputMarkdown);
-
-                // output html 
-                try {
-                    if (inputMarkdown == null || inputMarkdown == undefined) {
-                        console.log(inputMarkdown);
-                        htmlPreviewPanel.innerHTML = "You havent written anything.";
-                    } else {
-                        htmlPreviewPanel.innerHTML = markdownToHTML(inputMarkdown);
-                    }
-                } catch (error) {
-                    console.error("Error converting md to HTML:", error);
-                    htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
-                }
-            };
-
-            // retrieve from localStorage
-            const savedInLS = loadSTG();
-            if (savedInLS) {
-                markdownEditorInput.value = savedInLS;
-                updateHTMLPreview();
-            }
-
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
 
@@ -127,6 +100,35 @@
                     console.error("Error in markdownToHTML function:", error);
                 }
             };
+
+            const updateHTMLPreview = () => {
+                const inputMarkdown = markdownEditorInput.value;
+
+                // save to localStorage 
+                saveSTG(inputMarkdown);
+
+                // output html 
+                try {
+                    if (inputMarkdown == null || inputMarkdown == undefined) {
+                        console.log(inputMarkdown);
+                        htmlPreviewPanel.innerHTML = "You havent written anything.";
+                    } else {
+                        htmlPreviewPanel.innerHTML = markdownToHTML(inputMarkdown);
+                    }
+                } catch (error) {
+                    console.error("Error converting md to HTML:", error);
+                    htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
+                }
+            };
+
+            // retrieve from localStorage
+            const savedInLS = loadSTG();
+            if (savedInLS) {
+                markdownEditorInput.value = savedInLS;
+                updateHTMLPreview();
+            }
+
+
 
             updateHTMLPreview();
 
