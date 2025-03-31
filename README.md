@@ -52,6 +52,8 @@ Modern browsers block JavaScript module imports (import { } from ...) when openi
     http-server -p 3000
     ```
 
+> [!IMPORTANT] 
+> NOTICE: USE `http-server -c-1` TO PREVENT CACHING. 
 
 ## Regex Cheat Sheet for Reference 
 | Markdown Syntax           | Regex Pattern                           | Description                               |
