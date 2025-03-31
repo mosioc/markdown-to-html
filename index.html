@@ -20,6 +20,9 @@
 
             <button id="clear-btn">Clear Editor</button>
             <button id="storage-clear-btn">Delete Storage</button>
+
+            <button id="undo-btn">Undo</button>
+            <button id="redo-btn">Redo</button>
         </div>
 
         <!-- live preview panel -->
@@ -34,14 +37,19 @@
 
     <script type="module">
         import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
+        import { addState, undo, redo } from './utils/historyManager.js';
 
         // run after DOM loaded 
         document.addEventListener('DOMContentLoaded', () => {
 
             const markdownEditorInput = document.getElementById('markdown-editor');
             const htmlPreviewPanel = document.getElementById('html-preview');
+
             const markdownClearButton = document.getElementById('clear-btn');
             const storageClearButton = document.getElementById('storage-clear-btn');
+
+            const undoButton = document.getElementById('undo-btn');
+            const redoButton = document.getElementById('redo-btn');
 
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
@@ -107,6 +115,10 @@
                 // save to localStorage 
                 saveSTG(inputMarkdown);
 
+                // save to history
+                addState(inputMarkdown);
+
+
                 // output html 
                 try {
                     if (inputMarkdown == null || inputMarkdown == undefined) {
@@ -128,6 +140,25 @@
                 updateHTMLPreview();
             }
 
+            // undo using history 
+            undoButton.addEventListener('click', () => {
+                const previousState = undo();
+
+                if (previousState != [] != null) {
+                    markdownEditorInput.value = previousState;
+                    htmlPreviewPanel.innerHTML = markdownToHTML(previousState);
+                }
+            });
+
+            // redo using history 
+            redoButton.addEventListener('click', () => {
+                const nextState = redo();
+
+                if (nextState != [] != null) {
+                    markdownEditorInput.value = nextState;
+                    htmlPreviewPanel.innerHTML = markdownToHTML(nextState);
+                }
+            }); 
 
 
             updateHTMLPreview();
@@ -154,7 +185,6 @@
                 updateHTMLPreview();
                 clearSTG();
             });
-
 
         });
 
