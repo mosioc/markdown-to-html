@@ -32,9 +32,9 @@
 
     </div>
 
-    <!-- load before everything -->
-    <script src="utils/localStorageHelper.js"></script>
-    <script>
+    <script type="module">
+        import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
+
         // run after DOM loaded 
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -43,19 +43,11 @@
             const markdownClearButton = document.getElementById('clear-btn');
             const storageClearButton = document.getElementById('storage-clear-btn');
 
-            // retrieve from localStorage
-            const savedInLS = loadSTG();
-            if (savedInLS) {
-                markdownEditorInput.value = savedInLS;
-                updateHTMLPreview();
-            }
-
-
             const updateHTMLPreview = () => {
                 const inputMarkdown = markdownEditorInput.value;
 
                 // save to localStorage 
-                saveSTG(inputMarkdown); 
+                saveSTG(inputMarkdown);
 
                 // output html 
                 try {
@@ -70,6 +62,13 @@
                     htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
                 }
             };
+
+            // retrieve from localStorage
+            const savedInLS = loadSTG();
+            if (savedInLS) {
+                markdownEditorInput.value = savedInLS;
+                updateHTMLPreview();
+            }
 
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
@@ -143,15 +142,15 @@
 
             // clear button for editor and preview
             markdownClearButton.addEventListener('click', () => {
-                markdownEditorInput.value = ""; 
+                markdownEditorInput.value = "";
                 updateHTMLPreview()
             });
 
             // delete data from localStorage 
             storageClearButton.addEventListener('click', () => {
-               markdownEditorInput.value = ""; 
-               updateHTMLPreview(); 
-               clearSTG(); 
+                markdownEditorInput.value = "";
+                updateHTMLPreview();
+                clearSTG();
             });
 
 
