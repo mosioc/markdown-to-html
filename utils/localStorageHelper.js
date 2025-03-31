@@ -7,9 +7,13 @@ if (STG_KEY == 'defKey') {
     console.info('Local Storage Key is set to default value!!!');
 }
 
-const saveSTG = (finalMarkdown) => {
+const saveSTG = (outputHTML) => {
+    // argument name changed (finalMarkdown-> outputHTML) to be more descriptive. 
+    // this comment will be deleted on next commit.
     try {
-        console.log('saveSTG', finalMarkdown);
+        console.log('saveSTG:', outputHTML);
+        localStorage.setItem(STG_KEY, outputHTML);
+        console.info('outputHTML saved');
     } catch (error) {
         console.error('Error saving to localStorage:', error);
     }
@@ -18,6 +22,7 @@ const saveSTG = (finalMarkdown) => {
 const loadSTG = () => {
     try {
         console.log('loadSTG called.');
+        return localStorage.getItem(STG_KEY) || 'defKey';
     }
     catch (error) {
         console.error('Error loading from localStorage:', error);
@@ -27,8 +32,9 @@ const loadSTG = () => {
 
 const clearSTG = () => {
     try {
-        return 0;
+        localStorage.removeItem(STG_KEY); 
+        console.info('Storage cleared ');
     } catch (error) {
-        return -1;
+        console.error('Error clearing localStorage:', error);
     }
 }
