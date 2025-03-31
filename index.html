@@ -11,24 +11,79 @@
 <body>
     <h1>Markdown to HTML Editor</h1>
 
-    <div class="container">
+    <div>
 
-        <!-- editor  -->
-        <div class="editor-container">
+        <!-- editor panel  -->
+        <div>
             <h2>Markdown</h2>
-            <textarea id="markdown-editor" placeholder="Write markdown here ...">
-        </textarea>
+            <textarea id="markdown-editor" placeholder="Write markdown here ..."></textarea>
         </div>
 
-        <!-- // live preview -->
-        <div class="preview-container">
-            <h2>HTML Preview</h2>
-            <div id="html-preview"></div>
+        <!-- live preview panel -->
+        <div>
+            <h2>Live HTML Preview</h2>
+            <div id="html-preview">
+                <p>Type to see resutl! </p>
+            </div>
         </div>
+
     </div>
 
     <script>
-        console.log('testing');
+        // run after DOM loaded 
+        document.addEventListener('DOMContentLoaded', () => {
+
+            console.log("dom loaded");
+
+            const markdownEditorInput = document.getElementById('markdown-editor');
+            const htmlPreviewPanel = document.getElementById('html-preview');
+
+            const updateHTMLPreview = () => {
+                const inputMarkdown = markdownEditorInput.value;
+
+                console.log("raw value:", inputMarkdown);
+
+                // output html 
+                try {
+                    if (inputMarkdown == null || inputMarkdown == undefined) {
+                        console.log(inputMarkdown);
+                        htmlPreviewPanel.innerHTML = "You havent written anything.";
+                    } else {
+                        htmlPreviewPanel.innerHTML = markdownToHTML(inputMarkdown);
+                    }
+                } catch (error) {
+                    console.error("Error converting md to HTML:", error);
+                    htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
+                }
+            };
+
+            const markdownToHTML = inputMarkdown => {
+                console.log("mToHtml:", inputMarkdown);
+
+                let html = inputMarkdown;
+
+                // test passing between two panels 
+                html += html + " TEST"; 
+
+                try {
+                    return html;
+                } catch (error) {
+                    console.error("Error in markdownToHTML function:", error);
+                }
+            };
+
+            updateHTMLPreview();
+
+            /* 
+            listen for input change 
+            + trigger update on output panel
+            */
+            markdownEditorInput.addEventListener('input',
+                () => {
+                    updateHTMLPreview();
+                });
+        });
+
     </script>
 </body>
 
