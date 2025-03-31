@@ -90,6 +90,9 @@
                 // multiline/code blocks (```md```)
                 html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>'); 
 
+                // inline code (`md`)
+                html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
                 try {
                     return html;
                 } catch (error) {
