@@ -4,8 +4,7 @@ Markdown to HTML using pure JS
 
 
 
-
-### Regex Cheat Sheet for Reference 
+## Regex Cheat Sheet for Reference 
 | Markdown Syntax           | Regex Pattern                           | Description                               |
 |---------------------------|-----------------------------------------|-------------------------------------------|
 | `# Heading`               | `^# (.*)$`                              | h1                         |
@@ -19,7 +18,7 @@ Markdown to HTML using pure JS
 | `- item`                  | `^- (.*$)`                              | unordered list              |
 | `1. item`                 | `^\d+\.(.*$)`                           | ordered list                |
 
-(Formatted and Corrected by GPT4o - Tested)
+(Formatted and corrected by GPT4o - Tested personally.)
 
 --- 
 ..
@@ -30,14 +29,13 @@ Markdown to HTML using pure JS
 ..
 ..
 ..
-### PS 
+## PS 
 
 Add an arbitrary key for Local Storage in a file named `config.js`: 
 ```js 
-const CONFIG = {
+export const CONFIG = {
     STG_KEY: "Your_Key"
 };
 
-export default CONFIG; 
 ```
 **OR** rename `config.example.js` file to `config.js` and put your key in `Your_Key`. 
