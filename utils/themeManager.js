@@ -16,7 +16,6 @@ export const setTheme = (theme) => {
         themeToggleButton.innerHTML = theme === 'dark-mode' ? '☀️' : '🌙';
     }
 
-    console.info('theme set to:', theme);
 };
 
 // theme getter

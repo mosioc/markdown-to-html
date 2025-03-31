@@ -1,8 +1,3 @@
-/**
- * Converts markdown text to HTML
- * @param {string} inputMarkdown - The markdown text to convert
- * @returns {string} The converted HTML
- */
 export function markdownToHTML(inputMarkdown) {
     if (!inputMarkdown) return "";
     

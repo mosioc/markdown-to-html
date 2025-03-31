@@ -6,9 +6,7 @@ const locSTG_KEY = CONFIG.STG_KEY || 'defKey';
 
 export const saveSTG = (outputHTML) => {
     try {
-        console.log('saveSTG:', outputHTML);
         localStorage.setItem(locSTG_KEY, outputHTML);
-        console.info('outputHTML saved');
     } catch (error) {
         console.error('Error saving to localStorage:', error);
     }
@@ -16,7 +14,6 @@ export const saveSTG = (outputHTML) => {
 
 export const loadSTG = () => {
     try {
-        console.log('loadSTG called.');
         return localStorage.getItem(locSTG_KEY);
     }
     catch (error) {
@@ -27,7 +24,6 @@ export const loadSTG = () => {
 
 export const clearSTG = () => {
     try {
-        localStorage.removeItem(locSTG_KEY);
         console.info('Storage cleared ');
     } catch (error) {
         console.error('Error clearing localStorage:', error);
