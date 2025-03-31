@@ -88,10 +88,17 @@
                 html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
 
                 // multiline/code blocks (```md```)
-                html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>'); 
+                html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
 
                 // inline code (`md`)
                 html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+                // unordered list (- md)
+                html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
+                html = html.replace(/(<li>.*<\/li>\n)+/g, '<ul>$&</ul>');
+
+                    
+
 
                 try {
                     return html;
