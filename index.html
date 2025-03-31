@@ -86,8 +86,9 @@
 
                 // links ([md](mdUrl)) - $1 => mdLinkAddr, $2 => url
                 html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
-                
 
+                // multiline/code blocks (```md```)
+                html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>'); 
 
                 try {
                     return html;
