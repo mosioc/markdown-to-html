@@ -20,3 +20,24 @@ Markdown to HTML using pure JS
 | `1. item`                 | `^\d+\.(.*$)`                           | ordered list                |
 
 (Formatted and Corrected by GPT4o - Tested)
+
+--- 
+..
+..
+..
+..
+..
+..
+..
+..
+### PS 
+
+Add an arbitrary key for Local Storage in a file named `config.js`: 
+```js 
+const CONFIG = {
+    STG_KEY: "Your_Key"
+};
+
+export default CONFIG; 
+```
+**OR** rename `config.example.js` file to `config.js` and put your key in `Your_Key`. 
