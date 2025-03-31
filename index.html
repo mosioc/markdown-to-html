@@ -137,6 +137,9 @@
             const savedInLS = loadSTG();
             if (savedInLS) {
                 markdownEditorInput.value = savedInLS;
+
+                addState(savedInLS);
+
                 updateHTMLPreview();
             }
 
@@ -144,8 +147,9 @@
             undoButton.addEventListener('click', () => {
                 const previousState = undo();
 
-                if (previousState != [] != null) {
+                if (previousState && typeof previousState === 'string') {
                     markdownEditorInput.value = previousState;
+
                     htmlPreviewPanel.innerHTML = markdownToHTML(previousState);
                 }
             });
@@ -154,11 +158,11 @@
             redoButton.addEventListener('click', () => {
                 const nextState = redo();
 
-                if (nextState != [] != null) {
+                if (nextState && typeof nextState === 'string') {
                     markdownEditorInput.value = nextState;
                     htmlPreviewPanel.innerHTML = markdownToHTML(nextState);
                 }
-            }); 
+            });
 
 
             updateHTMLPreview();

@@ -23,7 +23,7 @@ export const undo = () => {
         // return the previous state
         return history[currentIndex];
     }
-    return [];
+    return null;
 }
 
 export const redo = () => {
@@ -35,7 +35,7 @@ export const redo = () => {
         // return the next state
         return history[currentIndex];
     }
-    return [];
+    return null;
 }
 
 export const clearHistory = () => {
