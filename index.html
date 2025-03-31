@@ -98,6 +98,7 @@
                 html = html.replace(/(<li>.*<\/li>\n)+/g, '<ul>$&</ul>');
 
                 // ordered list (1. md)
+                /* need attention */
                 html = html.replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
                 html = html.replace(/(<li>.*<\/li>\n)+/g, function (match) {
                     // convert to <ol> if its not in <ul>
@@ -106,7 +107,6 @@
                     }
                     return match;
                 });
-
 
                 try {
                     return html;
