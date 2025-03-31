@@ -81,6 +81,10 @@
                 // bold (**md**)
                 html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
 
+                // italic (*md*)
+                html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
+
+                
 
                 try {
                     return html;
