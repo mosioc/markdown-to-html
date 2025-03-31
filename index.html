@@ -6,35 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Md2HTML Editor</title>
 
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="./css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
-    <h1>Markdown to HTML Editor</h1>
+    <div class="container">
+        <header class="mb-4 text-center">
+            <h1 class="display-4">Markdown to HTML Editor</h1>
+            <p class="lead text-muted">Convert Markdown to HTML with live preview</p>
+        </header>
 
-    <div>
+        <div class="row editor-container">
+            <!-- editor panel -->
+            <div class="col-md-6">
+                <div class="panel-header d-flex justify-content-between align-items-center">
+                    <h2>Markdown</h2>
+                    <div id="word-count" class="badge bg-info">Words: 0</div>
+                </div>
 
-        <!-- editor panel  -->
-        <div>
-            <h2>Markdown</h2>
-            <textarea id="markdown-editor" placeholder="Write markdown here ..."></textarea>
-            <div id="word-count">Words: 0</div>
+                <textarea id="markdown-editor" class="form-control" placeholder="Write markdown here ..."></textarea>
 
-            <button id="clear-btn">Clear Editor</button>
-            <button id="storage-clear-btn">Delete Storage</button>
+                <div class="btn-group mt-2">
+                    <button id="clear-btn" class="btn btn-outline-secondary">Clear Editor</button>
+                    <button id="storage-clear-btn" class="btn btn-outline-danger">Delete Storage</button>
+                    <button id="undo-btn" class="btn btn-outline-primary">Undo</button>
+                    <button id="redo-btn" class="btn btn-outline-primary">Redo</button>
+                </div>
+            </div>
 
-            <button id="undo-btn">Undo</button>
-            <button id="redo-btn">Redo</button>
-        </div>
-
-        <!-- live preview panel -->
-        <div>
-            <h2>Live HTML Preview</h2>
-            <div id="html-preview">
-                <p>Type to see result! </p>
+            <!-- live preview panel -->
+            <div class="col-md-6">
+                <div class="panel-header">
+                    <h2>Live HTML Preview</h2>
+                </div>
+                <div id="html-preview">
+                    <p>Type to see result!</p>
+                </div>
             </div>
         </div>
 
+        <footer class="mt-5 text-center text-muted">
+            <small>Markdown to HTML Converter</small>
+        </footer>
     </div>
+
+    <!-- bootstrap - js popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script type="module">
         import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
@@ -130,7 +151,7 @@
                 try {
                     if (inputMarkdown == null || inputMarkdown == undefined) {
                         console.log(inputMarkdown);
-                        htmlPreviewPanel.innerHTML = "You havent written anything.";
+                        htmlPreviewPanel.innerHTML = "You haven't written anything.";
                     } else {
                         htmlPreviewPanel.innerHTML = markdownToHTML(inputMarkdown);
                     }
@@ -205,7 +226,6 @@
             });
 
         });
-
     </script>
 </body>
 

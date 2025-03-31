@@ -1,0 +1,66 @@
+/* Main layout */
+body {
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.editor-container {
+    height: calc(100vh - 120px);
+    min-height: 500px;
+}
+
+/* Editor panel */
+#markdown-editor {
+    width: 100%;
+    height: calc(100% - 80px);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    resize: none;
+    background-color: #fff;
+}
+
+/* Preview panel */
+#html-preview {
+    width: 100%;
+    height: calc(100% - 80px);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+/* Word count */
+#word-count {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Button styling */
+.btn-group {
+    margin-top: 10px;
+}
+
+.panel-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Code blocks in preview */
+#html-preview pre {
+    background-color: #f8f9fa;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#html-preview code {
+    color: #d63384;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+}
