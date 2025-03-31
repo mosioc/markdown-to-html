@@ -14,7 +14,10 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container position-relative" >
+
+        <button id="theme-toggle" class="btn btn-sm theme-btn">🌙</button>
+
         <header class="mb-4 text-center">
             <h1 class="display-4">Markdown to HTML Editor</h1>
             <p class="lead text-muted">Convert Markdown to HTML with live preview</p>
@@ -75,6 +78,7 @@
             const redoButton = document.getElementById('redo-btn');
 
             const wordCountElement = document.getElementById('word-count');
+            
 
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
