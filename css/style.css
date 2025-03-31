@@ -14,6 +14,7 @@ body.dark-mode {
     color: #f8f9fa;
 }
 
+/* responsive container */
 .editor-container {
     height: calc(100vh - 140px);
     min-height: 500px;
@@ -79,6 +80,9 @@ body.dark-mode {
 /* button styling */
 .btn-group {
     margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .panel-header {
@@ -100,6 +104,7 @@ body.dark-mode {
     border: 1px solid;
     border-radius: 4px;
     padding: 10px;
+    overflow-x: auto; /* Prevent code blocks from breaking layout */
 }
 
 .light-mode #html-preview pre {
@@ -164,4 +169,70 @@ body.dark-mode {
 
 .dark-mode .text-muted {
     color: #adb5bd !important;
+}
+
+
+/* tables responsive */
+#html-preview table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+/* mobile/tablet responsive adjustments */
+@media (max-width: 767.98px) {
+    .editor-container {
+        height: auto;
+        min-height: auto;
+    }
+    
+    #markdown-editor, 
+    #html-preview {
+        height: 400px;
+    }
+    
+    .btn-group .btn {
+        flex: 1;
+        min-width: 100px;
+    }
+    
+    .theme-btn {
+        top: 10px;
+        right: 10px;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    header p {
+        font-size: 1rem;
+    }
+}
+
+/* small mobile adjustments */
+@media (max-width: 575.98px) {
+    body {
+        padding: 10px;
+    }
+    
+    #markdown-editor, 
+    #html-preview {
+        height: 300px;
+        padding: 10px;
+    }
+    
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
 }
