@@ -97,8 +97,9 @@
                 html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
                 html = html.replace(/(<li>.*<\/li>\n)+/g, '<ul>$&</ul>');
 
+                // ordered list (1. md)
+                html = html.replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
                     
-
 
                 try {
                     return html;
