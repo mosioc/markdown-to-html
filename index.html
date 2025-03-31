@@ -76,7 +76,10 @@
                 // headings (h1: #md , h2: ##md , h3: ###md) 
                 html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
                 html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-                html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');  
+                html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+
+                // bold (**md**)
+                html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
 
 
                 try {
