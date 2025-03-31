@@ -99,7 +99,14 @@
 
                 // ordered list (1. md)
                 html = html.replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
-                    
+                html = html.replace(/(<li>.*<\/li>\n)+/g, function (match) {
+                    // convert to <ol> if its not in <ul>
+                    if (!match.startsWith('<ul>')) {
+                        return '<ol>' + match + '</ol>';
+                    }
+                    return match;
+                });
+
 
                 try {
                     return html;
