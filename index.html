@@ -17,6 +17,9 @@
         <div>
             <h2>Markdown</h2>
             <textarea id="markdown-editor" placeholder="Write markdown here ..."></textarea>
+
+            <button id="clear-btn">Clear Editor</button>
+            <button id="storage-clear-btn">Delete Storage</button>
         </div>
 
         <!-- live preview panel -->
@@ -29,19 +32,30 @@
 
     </div>
 
+    <!-- load before everything -->
+    <script src="utils/localStorageHelper.js"></script>
     <script>
         // run after DOM loaded 
         document.addEventListener('DOMContentLoaded', () => {
 
-            console.log("dom loaded");
-
             const markdownEditorInput = document.getElementById('markdown-editor');
             const htmlPreviewPanel = document.getElementById('html-preview');
+            const markdownClearButton = document.getElementById('clear-btn');
+            const storageClearButton = document.getElementById('storage-clear-btn');
+
+            // retrieve from localStorage
+            const savedInLS = loadSTG();
+            if (savedInLS) {
+                markdownEditorInput.value = savedInLS;
+                updateHTMLPreview();
+            }
+
 
             const updateHTMLPreview = () => {
                 const inputMarkdown = markdownEditorInput.value;
 
-                console.log("raw value:", inputMarkdown);
+                // save to localStorage 
+                saveSTG(inputMarkdown); 
 
                 // output html 
                 try {
@@ -119,12 +133,28 @@
 
             /* 
             listen for input change 
-            + trigger update on output panel
+            +
+            trigger update on output panel           
             */
             markdownEditorInput.addEventListener('input',
                 () => {
                     updateHTMLPreview();
                 });
+
+            // clear button for editor and preview
+            markdownClearButton.addEventListener('click', () => {
+                markdownEditorInput.value = ""; 
+                updateHTMLPreview()
+            });
+
+            // delete data from localStorage 
+            storageClearButton.addEventListener('click', () => {
+               markdownEditorInput.value = ""; 
+               updateHTMLPreview(); 
+               clearSTG(); 
+            });
+
+
         });
 
     </script>
