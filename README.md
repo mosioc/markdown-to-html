@@ -21,17 +21,92 @@ This project allows users to:
 - Hyperlinks
 - Code blocks (multiline + inline)
 
-## Implementation Details
+## Project Structure & Architecture
 
-### Architecture
+### Directory Structure
 
-The project follows a modular JavaScript architecture with separate components handling distinct functionality:
+```
+markdown-to-html/
+├── css/
+│   └── style.css              # Main stylesheet for the application
+├── js/
+│   ├── app.js                 # Main application script
+│   └── markdownParser.js      # Markdown conversion logic
+├── utils/
+│   ├── historyManager.js      # State history for undo/redo
+│   ├── localStorageHelper.js  # Local storage operations
+│   ├── themeManager.js        # Theme switching functionality
+│   └── wordCounter.js         # Word counting utilities
+├── index.html                 # Main HTML file
+├── config.example.js          # Configuration template
+└── README.md                  # Project documentation
+```
 
-1. **Core Converter**: Regex-based Markdown parser in the main script
-2. **Theme Management**: Light/dark mode with system preference detection
-3. **Storage Handling**: Persistent storage with configurable keys
-4. **History Tracking**: State management for undo/redo operations
-5. **Word Counter**: Text analysis with code block exclusion
+### Architectural Design
+
+The project follows a **modular JavaScript architecture** with clean separation of concerns. Each component is responsible for a specific functionality and communicates with other components through well-defined interfaces.
+
+#### Core Architectural Principles:
+
+1. **Separation of Concerns**: Each JavaScript module handles a distinct responsibility.
+2. **Modularity**: All functionality is encapsulated in purpose-built modules.
+3. **Minimal Dependencies**: Modules have clear, minimal dependencies on each other.
+4. **Clean Interfaces**: Components interact through simple, well-defined interfaces.
+5. **DRY Principle**: Common functionality is abstracted to avoid repetition.
+
+### Key Components
+
+#### 1. Core Application (app.js)
+The central orchestrator that initializes the application, sets up event listeners, and coordinates between modules. It:
+- Initializes the application when the DOM is loaded
+- Manages DOM element references
+- Coordinates interactions between different components
+- Sets up event handling for user interactions
+
+#### 2. Markdown Parser (markdownParser.js)
+A pure function-based module that transforms Markdown text into HTML:
+- Uses regex patterns to identify Markdown syntax
+- Applies transformations to convert Markdown to HTML
+- Handles special cases like code blocks with language detection
+- Maintains a sequential transformation approach
+
+#### 3. Utility Modules
+Specialized functionality is separated into utility modules:
+
+**Theme Manager (themeManager.js)**
+- Handles light/dark theme switching
+- Detects system preferences
+- Persists theme choices in localStorage
+- Updates UI elements when themes change
+
+**Local Storage Helper (localStorageHelper.js)**
+- Abstracts storage operations behind a clean API
+- Handles storage errors gracefully
+- Uses configurable keys from config.js
+
+**History Manager (historyManager.js)**
+- Implements the state management pattern
+- Provides undo/redo functionality
+- Maintains an efficient history stack
+- Prevents duplicate state entries
+
+**Word Counter (wordCounter.js)**
+- Counts words while ignoring markdown syntax
+- Excludes code blocks from counting
+- Provides utility for updating the UI
+
+### Data Flow
+
+The application follows a unidirectional data flow:
+
+1. **User Input** → User types in the Markdown editor
+2. **Event Handling** → Input events trigger state updates
+3. **State Processing** → Changes are processed (saved to history/storage)
+4. **Markdown Processing** → Text is converted to HTML
+5. **DOM Updates** → UI is updated with new content
+6. **Side Effects** → Word count is updated, highlighting is applied
+
+This approach creates a predictable and maintainable application state.
 
 ### Technical Solutions
 
@@ -100,7 +175,18 @@ export const countWords = (text) => {
 
 **Problem**: Ensuring consistent behavior across different browsers, especially with module imports.
 
-**Solution**: Tested on a development server (http-server; using NodeJS NPM) to properly serve modules and avoid CORS issues.
+**Solution**: Used a development server (http-server; NodeJS NPM) to properly serve modules and avoid CORS issues.
+
+## Code Quality Principles
+
+This project adheres to several code quality principles:
+
+1. **Single Responsibility Principle**: Each module does one thing and does it well
+2. **Immutability**: Functions avoid modifying their inputs directly
+3. **Defensive Programming**: Code validates inputs and handles errors gracefully
+4. **Progressive Enhancement**: Core functionality works even if some features aren't available
+5. **Accessibility**: ARIA attributes and semantic HTML ensure accessibility
+6. **Performance Optimization**: Efficient DOM operations and event handling
 
 ## Requirements
 
@@ -193,4 +279,4 @@ export const CONFIG = {
 **OR** rename `config.example.js` file to `config.js` and put your key in `Your_Key`.
 (Or if you know the basics, use .env)
 
-And in the end: Thank You! :D 
+And in the end: Thank You! :D
