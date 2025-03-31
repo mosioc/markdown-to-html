@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A responsive Markdown to HTML converter with live preview, themes, and local storage">
     <title>Live Md2HTML Editor</title>
 
-    <!-- bootstrap css -->
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- custom css -->
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+    
+    <!-- Custom CSS -->
     <link href="./css/style.css" rel="stylesheet">
-
 </head>
 
-<body>
+<body class="light-mode">
     <div class="container-fluid container-lg position-relative">
-
-        <button id="theme-toggle" class="btn btn-sm theme-btn">🌙</button>
+        <button id="theme-toggle" class="btn btn-sm theme-btn" aria-label="Toggle theme">🌙</button>
 
         <header class="mb-4 text-center">
             <h1 class="display-4">Markdown to HTML Editor</h1>
@@ -24,14 +26,14 @@
         </header>
 
         <div class="row editor-container">
-            <!-- editor panel -->
+            <!-- Editor panel -->
             <div class="col-md-6">
                 <div class="panel-header d-flex justify-content-between align-items-center">
                     <h2>Markdown</h2>
                     <div id="word-count" class="badge bg-info">Words: 0</div>
                 </div>
 
-                <textarea id="markdown-editor" class="form-control" placeholder="Write markdown here ..."></textarea>
+                <textarea id="markdown-editor" class="form-control" placeholder="Write markdown here ..." aria-label="Markdown input"></textarea>
 
                 <div class="btn-group mt-2">
                     <button id="clear-btn" class="btn btn-outline-secondary">Clear Editor</button>
@@ -41,12 +43,12 @@
                 </div>
             </div>
 
-            <!-- live preview panel -->
+            <!-- Live preview panel -->
             <div class="col-md-6">
                 <div class="panel-header">
                     <h2>Live HTML Preview</h2>
                 </div>
-                <div id="html-preview">
+                <div id="html-preview" aria-live="polite">
                     <p>Type to see result!</p>
                 </div>
             </div>
@@ -57,183 +59,14 @@
         </footer>
     </div>
 
-    <!-- bootstrap - js popper -->
+    <!-- Scripts -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script type="module">
-        import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
-        import { addState, undo, redo } from './utils/historyManager.js';
-        import { updateWordCount } from './utils/wordCounter.js';
-        import { initThemeManager } from './utils/themeManager.js';
-
-        // run after DOM loaded 
-        document.addEventListener('DOMContentLoaded', () => {
-
-            initThemeManager();
-
-            const markdownEditorInput = document.getElementById('markdown-editor');
-            const htmlPreviewPanel = document.getElementById('html-preview');
-
-            const markdownClearButton = document.getElementById('clear-btn');
-            const storageClearButton = document.getElementById('storage-clear-btn');
-
-            const undoButton = document.getElementById('undo-btn');
-            const redoButton = document.getElementById('redo-btn');
-
-            const wordCountElement = document.getElementById('word-count');
-
-
-            const markdownToHTML = inputMarkdown => {
-                console.log("mToHtml:", inputMarkdown);
-
-                let html = inputMarkdown;
-
-                /* 
-                MARKDOWNS TO HTML CONVERTER
-
-                headings 
-                bold (text formatting)
-                lists (text formatting)
-                links 
-                code blocks (multiline + inline)
-
-                */
-
-                // headings (h1: #md , h2: ##md , h3: ###md) 
-                html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-                html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-                html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-
-                // bold (**md**)
-                html = html.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-
-                // italic (*md*)
-                html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
-
-                // links ([md](mdUrl)) - $1 => mdLinkAddr, $2 => url
-                html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
-
-                // multiline/code blocks (```md```)
-                html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-
-                // inline code (`md`)
-                html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-                // unordered list (- md)
-                html = html.replace(/^- (.*)$/gm, '<li>$1</li>');
-                html = html.replace(/(<li>.*<\/li>\n)+/g, '<ul>$&</ul>');
-
-                // ordered list (1. md)
-                /* need attention */
-                html = html.replace(/^\d+\. (.*)$/gm, '<li>$1</li>');
-                html = html.replace(/(<li>.*<\/li>\n)+/g, function (match) {
-                    // convert to <ol> if its not in <ul>
-                    if (!match.startsWith('<ul>')) {
-                        return '<ol>' + match + '</ol>';
-                    }
-                    return match;
-                });
-
-                try {
-                    return html;
-                } catch (error) {
-                    console.error("Error in markdownToHTML function:", error);
-                }
-            };
-
-            const updateHTMLPreview = () => {
-                const inputMarkdown = markdownEditorInput.value;
-
-                // update word count
-                updateWordCount(inputMarkdown, wordCountElement);
-
-                // save to localStorage 
-                saveSTG(inputMarkdown);
-
-                // save to history
-                addState(inputMarkdown);
-
-
-                // output html 
-                try {
-                    if (inputMarkdown == null || inputMarkdown == undefined) {
-                        console.log(inputMarkdown);
-                        htmlPreviewPanel.innerHTML = "You haven't written anything.";
-                    } else {
-                        htmlPreviewPanel.innerHTML = markdownToHTML(inputMarkdown);
-                    }
-                } catch (error) {
-                    console.error("Error converting md to HTML:", error);
-                    htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
-                }
-            };
-
-            // retrieve from localStorage
-            const savedInLS = loadSTG();
-            if (savedInLS) {
-                markdownEditorInput.value = savedInLS;
-
-                updateWordCount(savedInLS, wordCountElement);
-
-                addState(savedInLS);
-
-                updateHTMLPreview();
-            }
-
-            // undo using history 
-            undoButton.addEventListener('click', () => {
-                const previousState = undo();
-
-                if (previousState && typeof previousState === 'string') {
-                    markdownEditorInput.value = previousState;
-
-                    updateWordCount(previousState, wordCountElement);
-
-                    htmlPreviewPanel.innerHTML = markdownToHTML(previousState);
-                }
-            });
-
-            // redo using history 
-            redoButton.addEventListener('click', () => {
-                const nextState = redo();
-
-                if (nextState && typeof nextState === 'string') {
-                    markdownEditorInput.value = nextState;
-
-                    updateWordCount(nextState, wordCountElement);
-
-                    htmlPreviewPanel.innerHTML = markdownToHTML(nextState);
-                }
-            });
-
-
-            updateHTMLPreview();
-
-            /* 
-            listen for input change 
-            +
-            trigger update on output panel           
-            */
-            markdownEditorInput.addEventListener('input',
-                () => {
-                    updateHTMLPreview();
-                });
-
-            // clear button for editor and preview
-            markdownClearButton.addEventListener('click', () => {
-                markdownEditorInput.value = "";
-                updateHTMLPreview();
-            });
-
-            // delete data from localStorage 
-            storageClearButton.addEventListener('click', () => {
-                markdownEditorInput.value = "";
-                updateHTMLPreview();
-                clearSTG();
-            });
-
-        });
-    </script>
+    
+    <!-- Highlight.js for code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    
+    <!-- Main App Script -->
+    <script type="module" src="./js/app.js"></script>
 </body>
-
 </html>
