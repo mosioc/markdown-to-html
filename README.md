@@ -5,7 +5,7 @@ Markdown to HTML using pure JS
 
 
 
-### Regex Cheat Sheet for reference 
+### Regex Cheat Sheet for Reference 
 ^# (.*$)	Matches # Heading (h1)
 ^## (.*$)	Matches ## Heading (h2)
 ^### (.*$)	Matches ### Heading (h3)
