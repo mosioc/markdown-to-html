@@ -84,7 +84,10 @@
                 // italic (*md*)
                 html = html.replace(/\*(.*?)\*/g, '<i>$1</i>');
 
+                // links ([md](mdUrl)) - $1 => mdLinkAddr, $2 => url
+                html = html.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2">$1</a>');
                 
+
 
                 try {
                     return html;
