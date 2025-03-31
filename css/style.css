@@ -1,4 +1,4 @@
-/* Main layout */
+/* main layout */
 body {
     padding: 20px;
     transition: background-color 0.3s, color 0.3s;
@@ -19,7 +19,7 @@ body.dark-mode {
     min-height: 500px;
 }
 
-/* Editor panel */
+/* editor panel */
 #markdown-editor {
     width: 100%;
     height: calc(100% - 80px);
@@ -29,6 +29,10 @@ body.dark-mode {
     font-family: 'Courier New', Courier, monospace;
     resize: none;
     transition: background-color 0.3s, color 0.3s;
+}
+
+#markdown-editor::placeholder {
+    color: #004eb5;
 }
 
 .light-mode #markdown-editor {
@@ -43,7 +47,7 @@ body.dark-mode {
     border-color: #495057;
 }
 
-/* Preview panel */
+/* preview panel */
 #html-preview {
     width: 100%;
     height: calc(100% - 80px);
@@ -66,13 +70,13 @@ body.dark-mode {
     border-color: #495057;
 }
 
-/* Word count */
+/* word count */
 #word-count {
     margin-top: 10px;
     font-size: 0.9rem;
 }
 
-/* Button styling */
+/* button styling */
 .btn-group {
     margin-top: 10px;
 }
@@ -91,7 +95,7 @@ body.dark-mode {
     border-color: #495057;
 }
 
-/* Code blocks in preview */
+/* multiline/code blocks in preview */
 #html-preview pre {
     border: 1px solid;
     border-radius: 4px;
@@ -123,7 +127,7 @@ body.dark-mode {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Simple theme toggle button */
+/* simple theme toggle button */
 .theme-btn {
     position: absolute;
     top: 20px;

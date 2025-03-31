@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="container position-relative" >
+    <div class="container position-relative">
 
         <button id="theme-toggle" class="btn btn-sm theme-btn">🌙</button>
 
@@ -64,9 +64,12 @@
         import { saveSTG, loadSTG, clearSTG } from './utils/localStorageHelper.js';
         import { addState, undo, redo } from './utils/historyManager.js';
         import { updateWordCount } from './utils/wordCounter.js';
+        import { initThemeManager } from './utils/themeManager.js';
 
         // run after DOM loaded 
         document.addEventListener('DOMContentLoaded', () => {
+
+            initThemeManager();
 
             const markdownEditorInput = document.getElementById('markdown-editor');
             const htmlPreviewPanel = document.getElementById('html-preview');
@@ -78,7 +81,7 @@
             const redoButton = document.getElementById('redo-btn');
 
             const wordCountElement = document.getElementById('word-count');
-            
+
 
             const markdownToHTML = inputMarkdown => {
                 console.log("mToHtml:", inputMarkdown);
@@ -143,13 +146,13 @@
 
                 // update word count
                 updateWordCount(inputMarkdown, wordCountElement);
-                
+
                 // save to localStorage 
                 saveSTG(inputMarkdown);
-                
+
                 // save to history
                 addState(inputMarkdown);
-                
+
 
                 // output html 
                 try {
@@ -164,28 +167,28 @@
                     htmlPreviewPanel.innerHTML = "Error converting markdown to HTML.";
                 }
             };
-            
+
             // retrieve from localStorage
             const savedInLS = loadSTG();
             if (savedInLS) {
                 markdownEditorInput.value = savedInLS;
-                
+
                 updateWordCount(savedInLS, wordCountElement);
-                
+
                 addState(savedInLS);
-                
+
                 updateHTMLPreview();
             }
 
             // undo using history 
             undoButton.addEventListener('click', () => {
                 const previousState = undo();
-                
+
                 if (previousState && typeof previousState === 'string') {
                     markdownEditorInput.value = previousState;
 
                     updateWordCount(previousState, wordCountElement);
-                    
+
                     htmlPreviewPanel.innerHTML = markdownToHTML(previousState);
                 }
             });
