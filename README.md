@@ -1,6 +1,31 @@
 # Markdown to HTML Editor
 
-A responsive, browser-based Markdown editor with live HTML preview. This project implements a lightweight Markdown-to-HTML converter using pure JavaScript, with syntax highlighting, themes, and local storage functionality.
+A responsive, browser-based Markdown editor with live HTML preview. This project implements a lightweight Markdown-to-HTML converter using pure JavaScript, with syntax highlighting, themes, and local storage functionality. Try it out: [https://mosioc.github.io/markdown-to-html/](https://mosioc.github.io/markdown-to-html/). 
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+  - [Supported Markdown Features](#supported-markdown-features)
+- [Project Structure & Architecture](#project-structure--architecture)
+  - [Directory Structure](#directory-structure)
+  - [Architectural Design](#architectural-design)
+  - [Key Components](#key-components)
+  - [Data Flow](#data-flow)
+  - [Technical Solutions](#technical-solutions)
+- [Technical Challenges & Solutions](#technical-challenges--solutions)
+  - [Challenge 1: Nested Markdown Structure](#challenge-1-nested-markdown-structure)
+  - [Challenge 2: History Management](#challenge-2-history-management)
+  - [Challenge 3: Word Count Accuracy](#challenge-3-word-count-accuracy)
+  - [Challenge 4: Cross-Browser Compatibility](#challenge-4-cross-browser-compatibility)
+- [Code Quality Principles](#code-quality-principles)
+- [Requirements](#requirements)
+  - [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+  - [Running the Project](#running-the-project)
+- [Deployment](#deployment)
+- [Future Enhancements](#future-enhancements)
+- [Regex Cheat Sheet](#regex-cheat-sheet-for-reference)
+- [PS](#ps)
 
 ## Project Overview
 
@@ -242,12 +267,18 @@ Modern browsers block JavaScript module imports (import { } from ...) when openi
 > [!IMPORTANT]
 > NOTICE: USE `http-server -c-1` TO PREVENT CACHING.
 
+## Deployment
+
+This project is automatically deployed to GitHub Pages on every push to the main branch using GitHub Actions.
+
+You can view the live version at: [https://mosioc.github.io/markdown-to-html/](https://mosioc.github.io/markdown-to-html/)
+
 ## Future Enhancements
 
 Planned features for future versions:
 - Full syntax highlighting in the editor
 - Support for more Markdown features (tables, checkboxes)
-- Export functionality (HTML, PDF)
+- Export functionality (PDF, ...)
 
 ## Regex Cheat Sheet for Reference
 
