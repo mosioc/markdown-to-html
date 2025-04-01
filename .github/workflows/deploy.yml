@@ -24,6 +24,12 @@ jobs:
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        
+      - name: Cache apt packages
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: nodejs 
+          version: 1.0
       
       - name: Create config.js file
         run: |
