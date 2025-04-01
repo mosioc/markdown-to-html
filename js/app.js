@@ -39,11 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 elements.preview.innerHTML = "You haven't written anything.";
             } else {
                 elements.preview.innerHTML = markdownToHTML(inputMarkdown);
-                
-                // Apply syntax highlighting to code blocks
-                document.querySelectorAll('#html-preview pre code').forEach(block => {
-                    hljs.highlightElement(block);
-                });
             }
         } catch (error) {
             console.error("Error converting markdown to HTML:", error);
