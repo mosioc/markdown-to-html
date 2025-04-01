@@ -64,11 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.editor.value = previousState;
             updateWordCount(previousState, elements.wordCount);
             elements.preview.innerHTML = markdownToHTML(previousState);
-            
-            // Apply syntax highlighting
-            document.querySelectorAll('#html-preview pre code').forEach(block => {
-                hljs.highlightElement(block);
-            });
+          
         }
     });
     
@@ -78,11 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.editor.value = nextState;
             updateWordCount(nextState, elements.wordCount);
             elements.preview.innerHTML = markdownToHTML(nextState);
-            
-            // Apply syntax highlighting
-            document.querySelectorAll('#html-preview pre code').forEach(block => {
-                hljs.highlightElement(block);
-            });
         }
     });
     
