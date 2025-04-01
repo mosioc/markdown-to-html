@@ -295,7 +295,7 @@ Planned features for future versions:
 | `- item`                  | `^- (.*$)`                              | unordered list              |
 | `1. item`                 | `^\d+\.(.*$)`                           | ordered list                |
 
-(Formatted and corrected by GPT4o - Tested personally.)
+(Formatted and corrected by GPT4o - Tested personally and used it in this project.)
 
 ## PS
 
