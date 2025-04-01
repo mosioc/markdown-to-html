@@ -276,9 +276,10 @@ You can view the live version at: [https://mosioc.github.io/markdown-to-html/](h
 ## Future Enhancements
 
 Planned features for future versions:
-- Full syntax highlighting in the editor
+- Full, custom syntax highlighting in the editor
 - Support for more Markdown features (tables, checkboxes)
 - Export functionality (PDF, ...)
+- Dev-side: Add JSDoc to JS files for better documentation
 
 ## Regex Cheat Sheet for Reference
 
