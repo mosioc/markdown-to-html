@@ -17,7 +17,37 @@ document.addEventListener('DOMContentLoaded', () => {
         storageBtn: document.getElementById('storage-clear-btn'),
         undoBtn: document.getElementById('undo-btn'),
         redoBtn: document.getElementById('redo-btn'),
-        wordCount: document.getElementById('word-count')
+        wordCount: document.getElementById('word-count'),
+        copyBtn: document.getElementById('copy-btn')
+    };
+    
+    // Copy preview HTML to clipboard
+    const copyPreview = async () => {
+        if (elements.preview.innerHTML === "You haven't written anything." || !elements.preview.innerHTML.trim()) {
+            alert('Nothing to copy!');
+            return;
+        }
+        
+        try {
+            await navigator.clipboard.writeText(elements.preview.innerHTML);
+            showCopyFeedback();
+        } catch (err) {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy to clipboard');
+        }
+    };
+    
+    // Show visual feedback when copied
+    const showCopyFeedback = () => {
+        const originalText = elements.copyBtn.textContent;
+        elements.copyBtn.textContent = '✓ Copied!';
+        elements.copyBtn.classList.add('btn-success');
+        elements.copyBtn.classList.remove('btn-outline-success');
+        setTimeout(() => {
+            elements.copyBtn.textContent = originalText;
+            elements.copyBtn.classList.remove('btn-success');
+            elements.copyBtn.classList.add('btn-outline-success');
+        }, 2000);
     };
     
     // Update HTML preview based on markdown input
@@ -57,6 +87,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Event listeners
     elements.editor.addEventListener('input', updateHTMLPreview);
+    
+    // Copy button click
+    elements.copyBtn.addEventListener('click', copyPreview);
+    
+    // Keyboard shortcut: Press 'C' to copy
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'c' || e.key === 'C') {
+            // Check if not typing in the editor
+            if (document.activeElement !== elements.editor) {
+                copyPreview();
+            }
+        }
+    });
     
     elements.undoBtn.addEventListener('click', () => {
         const previousState = undo();
