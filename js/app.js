@@ -106,9 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Keyboard shortcut: Press 'C' to copy
   document.addEventListener("keydown", (e) => {
-    if (e.key === "c" || e.key === "C") {
-      // Check if not typing in the editor
-      if (document.activeElement !== elements.editor) {
+    const isC = e.key === "c" || e.key === "C";
+    if (isC && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      const active = document.activeElement;
+      const isEditable =
+        active && active.matches('input, textarea, [contenteditable="true"]');
+      if (!isEditable && active !== elements.editor) {
         copyPreview();
       }
     }
