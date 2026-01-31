@@ -46,15 +46,20 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Show visual feedback when copied
+  const originalCopyBtnText = elements.copyBtn.textContent;
+  let copyFeedbackTimeoutId;
   const showCopyFeedback = () => {
-    const originalText = elements.copyBtn.textContent;
+    if (copyFeedbackTimeoutId) {
+      clearTimeout(copyFeedbackTimeoutId);
+    }
     elements.copyBtn.textContent = "✓ Copied!";
     elements.copyBtn.classList.add("btn-success");
     elements.copyBtn.classList.remove("btn-outline-success");
-    setTimeout(() => {
-      elements.copyBtn.textContent = originalText;
+    copyFeedbackTimeoutId = setTimeout(() => {
+      elements.copyBtn.textContent = originalCopyBtnText;
       elements.copyBtn.classList.remove("btn-success");
       elements.copyBtn.classList.add("btn-outline-success");
+      copyFeedbackTimeoutId = null;
     }, 2000);
   };
 
